@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ArbitrageAgent.Views.ExchangeView">
+    <VerticalStackLayout Padding="5">
+        <Label Text="{Binding Name}" Style="{StaticResource ViewTitleStyle}"/>
+        <Border Style="{StaticResource GroupBorderStyle}">
+            <VerticalStackLayout>
+                <Label Text="Asset Pairs" Style="{StaticResource GroupTitleStyle}"/>
+                <CollectionView ItemsSource="{Binding Assets}" SelectionMode="Single">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                                <CheckBox IsChecked="{Binding Enabled, Mode=TwoWay}"/>
+                                <Label Text="{Binding Fsym}" VerticalOptions="Center"/>
+                                <Label Text="/" VerticalOptions="Center"/>
+                                <Label Text="{Binding Tsym}" VerticalOptions="Center"/>
+                                <Label Text="{Binding Price, StringFormat='${0:N2}'}"
+                                       VerticalOptions="Center" Margin="30,0,0,0"/>
+                            </HorizontalStackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+            </VerticalStackLayout>
+        </Border>
+        <Border Style="{StaticResource GroupBorderStyle}">
+            <VerticalStackLayout>
+                <Label Text="Account Fees" Style="{StaticResource GroupTitleStyle}"/>
+                <Grid RowDefinitions="*,*" ColumnDefinitions="auto,auto" ColumnSpacing="20" Padding="10">
+                    <Label Text="Trade Fee:" Grid.Row="0" Grid.Column="0" VerticalOptions="Center"/>
+                    <Entry Text="{Binding TradeFee}" Grid.Row="0" Grid.Column="1" VerticalOptions="Center"
+                       MinimumWidthRequest="100"/>
+                    <Label Text="Transfer Fee:" Grid.Row="1" Grid.Column="0" VerticalOptions="Center"/>
+                    <Entry Text="{Binding TransferFee}" Grid.Row="1" Grid.Column="1" VerticalOptions="Center"/>
+                </Grid>
+            </VerticalStackLayout>
+        </Border>
+    </VerticalStackLayout>
+</ContentView>

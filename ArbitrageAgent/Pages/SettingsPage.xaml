@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:ArbitrageAgent.Views"
+             xmlns:behaviors="clr-namespace:ArbitrageAgent.Core.Behaviors;assembly=ArbitrageAgent.Core"
+             x:Class="ArbitrageAgent.Pages.SettingsPage"
+    Title="Settings">
+    <ScrollView Padding="10" >
+        <Grid RowDefinitions="auto,auto,auto" ColumnDefinitions="auto,*">
+            <Label Text="Settings" Style="{StaticResource PageTitleStyle}"/>
+            <VerticalStackLayout Padding="10" Grid.Row="1">
+                <Border Style="{StaticResource GroupBorderStyle}">
+                    <VerticalStackLayout>
+                        <Label Text="Heartbeat" Style="{StaticResource GroupTitleStyle}"/>
+                        <HorizontalStackLayout Spacing="10" VerticalOptions="Center">
+                            <Label Text="Interval (seconds):" VerticalOptions="Center"/>
+                            <Entry Text="{Binding HeartbeatInterval, Converter={StaticResource SecondsToMiliConverter}
+                                        ,Mode=TwoWay}"  Placeholder="Seconds" Keyboard="Numeric"
+                               VerticalOptions="Center" MinimumWidthRequest="100">
+                                <Entry.Behaviors>
+                                    <behaviors:PositiveNumberBehavior />
+                                </Entry.Behaviors>
+                            </Entry>
+                        </HorizontalStackLayout>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </Grid>
+    </ScrollView>
+</ContentPage>

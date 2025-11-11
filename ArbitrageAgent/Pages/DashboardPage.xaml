@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:ArbitrageAgent.Views"
+             xmlns:pages="clr-namespace:ArbitrageAgent.Pages"
+             xmlns:converters="clr-namespace:ArbitrageAgent.Core.Converters;assembly=ArbitrageAgent.Core"
+             x:Class="ArbitrageAgent.Pages.DashboardPage"
+    Title="Dashboard">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:RouteDisplayConverter x:Key="RouteDisplayConverter" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ScrollView>
+        <Grid RowDefinitions="auto,auto,auto" ColumnDefinitions="auto,*" Padding="10" RowSpacing="10"
+          ColumnSpacing="10">
+            <Label Text="Dashboard" Style="{StaticResource PageTitleStyle}"/>
+            <HorizontalStackLayout Grid.Column="1" HorizontalOptions="End" Margin="5,0,20,0"
+                                   Spacing="5" >
+                <Label Text="Last Update: " 
+                       VerticalOptions="Center" FontSize="12"/>
+                <Label Text="{Binding LastUpdate, StringFormat='{0:HH:mm:ss}'}" 
+                       VerticalOptions="Center" FontSize="12"/>
+            </HorizontalStackLayout>
+            <Border Grid.ColumnSpan="2" Grid.Row="1"
+                    Style="{StaticResource GroupBorderStyle}">
+                <VerticalStackLayout>
+                    <Grid ColumnDefinitions="auto,*">
+                        <Label Text="Trade Routes" Style="{StaticResource GroupTitleStyle}"/>
+                        
+                    </Grid>
+                    <CollectionView x:Name="TradeRoutesCollection"
+                                    ItemsSource="{Binding Routes}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                    <HorizontalStackLayout Spacing="5">
+                                        <Label Text="{Binding ., Converter={StaticResource RouteDisplayConverter}}" 
+                                                    FontAttributes="Bold" FontSize="14" />
+                                        <!--<Label Text="{Binding ProfitRate, StringFormat='Profit: {0:P3}'}"
+                                               FontSize="12"
+                                               TextColor="Green" />-->
+                                    </HorizontalStackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Border>
+            <Border  Grid.ColumnSpan="2"  Grid.Row="2"
+                    Style="{StaticResource GroupBorderStyle}">
+                <VerticalStackLayout>
+                    <Grid ColumnDefinitions="auto,*">
+                        <Label Text="Routes Graph" Style="{StaticResource GroupTitleStyle}"/>
+                    </Grid>
+                    <GraphicsView  x:Name="GraphView"
+                                  HeightRequest="400"
+                                  WidthRequest="1000"
+                                  HorizontalOptions="Center"
+                                  VerticalOptions="Center"/>
+                </VerticalStackLayout>
+            </Border>
+        </Grid>
+    </ScrollView>
+</ContentPage>
