@@ -44,7 +44,7 @@ namespace ArbitrageAgent.ViewModel.Models
 
         private void _heartbeatService_Elapsed()
         {
-            List<AssetMetadata> assets = generateMetadata();
+            IEnumerable<AssetMetadata> assets = generateMetadata();
             var graph = _graphService.BuildGraph(assets);
             var transferLinks = _routeService.GetTransferLinks(graph);
 
@@ -82,7 +82,7 @@ namespace ArbitrageAgent.ViewModel.Models
 
         private List<AssetMetadata> generateMetadata()
         {
-            List<AssetMetadata> assets = new List<AssetMetadata>();
+            List<AssetMetadata> assets = new();
 
             foreach (var ex in _dashboardVM.Exchanges)
             {

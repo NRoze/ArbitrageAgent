@@ -14,7 +14,7 @@ namespace ArbitrageAgent.ViewModel
         private readonly DemoEngine _demoEngine;
         private readonly IDataRepository _dataRepo;
 
-        public ObservableCollection<ExchangeViewModel> Exchanges { get; } = new ObservableCollection<ExchangeViewModel>();
+        public ObservableCollection<ExchangeViewModel> Exchanges { get; } = new ();
         private ExchangeViewModel? _selectedExchange;
         public ExchangeViewModel? SelectedExchange 
         {
@@ -57,7 +57,7 @@ namespace ArbitrageAgent.ViewModel
 
             foreach (var ex in exchanges)
             {
-                ExchangeViewModel viewModel = new ExchangeViewModel(_dataRepo, ex);
+                ExchangeViewModel viewModel = new (_dataRepo, ex);
 
                 viewModel.InitializeAssets(assets.Where(a => a.ExchangeId == ex.Id));
 

@@ -69,7 +69,7 @@ namespace ArbitrageAgent.Core.Services
             }
         }
 
-        public IEnumerable GetTransferLinks(ObservableCollection<AssetMetadata> i_Assets)
+        public IEnumerable GetTransferLinks(IEnumerable<AssetMetadata> i_Assets)
         {
             List<(AssetMetadata From, AssetMetadata To, string Profit)> result = 
                 new List<(AssetMetadata From, AssetMetadata To, string Profit)>();
@@ -92,7 +92,7 @@ namespace ArbitrageAgent.Core.Services
 
             return result.OrderByDescending(x => x.Profit);
         }
-        public List<(AssetNode From, AssetNode To, decimal Profit)> GetTransferLinks(List<AssetNode> i_Nodes)
+        public List<(AssetNode From, AssetNode To, decimal Profit)> GetTransferLinks(IEnumerable<AssetNode> i_Nodes)
         {
             List<(AssetNode From, AssetNode To, decimal Profit)> result = new List<(AssetNode From, AssetNode To, decimal Profit)>();
 

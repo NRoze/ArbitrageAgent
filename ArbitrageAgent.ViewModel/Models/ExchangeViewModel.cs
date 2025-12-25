@@ -52,7 +52,7 @@ namespace ArbitrageAgent.ViewModel.Models
                 commitChanges();
             }
         }
-        public ObservableCollection<AssetViewModel> Assets { get; set; } = new ObservableCollection<AssetViewModel>();
+        public ObservableCollection<AssetViewModel> Assets { get; set; } = new ();
         public ExchangeViewModel(IDataRepository dataRepository, Exchange exchange)
         {
             _dataRepository = dataRepository;
@@ -71,7 +71,7 @@ namespace ArbitrageAgent.ViewModel.Models
         {
             foreach (var asset in assets)
             {
-                AssetViewModel vm = new AssetViewModel(_dataRepository, asset);
+                AssetViewModel vm = new (_dataRepository, asset);
 
                 Assets.Add(vm);
             }

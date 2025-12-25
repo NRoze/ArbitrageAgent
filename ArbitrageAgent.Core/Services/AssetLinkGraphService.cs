@@ -1,16 +1,17 @@
 ﻿using ArbitrageAgent.Core.Infrastructure;
 using ArbitrageAgent.Core.Models;
-using System.ComponentModel;
+using System.Collections.Concurrent;
 
 namespace ArbitrageAgent.Core.Services
 {
     public class AssetLinkGraphService : BaseNotify
     {
-        public List<AssetNode> Nodes { get; set; }
+        private ConcurrentDictionary<(string, int), AssetNode> _nodesMap { get; set; }
+        public IEnumerable<AssetNode> Nodes => _nodesMap.Values;
 
-        public List<AssetNode> BuildGraph(List<AssetMetadata> i_Assets)
+        public IEnumerable<AssetNode> BuildGraph(IEnumerable<AssetMetadata> i_Assets)
         {
-            Nodes = new List<AssetNode>();
+            _nodesMap = new();
 
             populateNodes(i_Assets);
             populateLinks(i_Assets);
@@ -19,7 +20,7 @@ namespace ArbitrageAgent.Core.Services
             return Nodes;
         }
 
-        private void populateLinks(List<AssetMetadata> i_Assets)
+        private void populateLinks(IEnumerable<AssetMetadata> i_Assets)
         {
             foreach (AssetNode node in Nodes)
             {
@@ -28,15 +29,15 @@ namespace ArbitrageAgent.Core.Services
             }
         }
 
-        private void populateNodeLinksTransfers(AssetNode i_Node, List<AssetMetadata> i_Assets)
+        private void populateNodeLinksTransfers(AssetNode i_Node, IEnumerable<AssetMetadata> i_Assets)
         {
             AssetMetadata assetFrom, assetTo;
 
             foreach (AssetNode node in Nodes.Where(x => x.Name == i_Node.Name && x.ExchangeId != i_Node.ExchangeId))
             {
-                assetFrom = i_Assets.FirstOrDefault(x => x.ExchangeId != i_Node.ExchangeId && 
+                assetFrom = i_Assets.FirstOrDefault(x => x.ExchangeId != i_Node.ExchangeId &&
                                                     x.Fsym == i_Node.Name);
-                assetTo = i_Assets.FirstOrDefault(x => x.ExchangeId != node.ExchangeId && 
+                assetTo = i_Assets.FirstOrDefault(x => x.ExchangeId != node.ExchangeId &&
                                                     x.Fsym == node.Name &&
                                                     x.Tsym == assetFrom.Tsym);
                 if (assetFrom != null && assetTo != null)
@@ -46,7 +47,7 @@ namespace ArbitrageAgent.Core.Services
             }
         }
 
-        private void populateNodeLinksTrade(AssetNode i_Node, List<AssetMetadata> i_Assets)
+        private void populateNodeLinksTrade(AssetNode i_Node, IEnumerable<AssetMetadata> i_Assets)
         {
             AssetNode node;
 
@@ -71,7 +72,7 @@ namespace ArbitrageAgent.Core.Services
             }
         }
 
-        private void populateNodes(List<AssetMetadata> i_Assets)
+        private void populateNodes(IEnumerable<AssetMetadata> i_Assets)
         {
             AssetNode nodeF, nodeT;
 
@@ -86,10 +87,7 @@ namespace ArbitrageAgent.Core.Services
 
         private void addNode(AssetNode node)
         {
-            if (!Nodes.Any(x => x.Name == node.Name && x.ExchangeId == node.ExchangeId))
-            {
-                Nodes.Add(node);
-            }
+            _nodesMap.TryAdd((node.Name, node.ExchangeId), node);
         }
     }
 }

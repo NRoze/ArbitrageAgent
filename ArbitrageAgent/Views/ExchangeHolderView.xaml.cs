@@ -4,7 +4,7 @@ namespace ArbitrageAgent.Views;
 
 public partial class ExchangeHolderView : ContentView
 {
-    private readonly ExchangeView _exchangeView = new ExchangeView();
+    private readonly ExchangeView _exchangeView = new();
     public ExchangeHolderView()
 	{
 		InitializeComponent();
