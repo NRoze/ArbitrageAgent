@@ -11,7 +11,7 @@ namespace ArbitrageAgent.Core.Services
 {
     public class MaxWeightedRouteService
     {
-        public IEnumerable<(List<AssetNode> Route, decimal ProfitRate)> GetAllRoutes(List<AssetNode> i_Nodes, string i_StartingCurrency = "USD")
+        public IEnumerable<(List<AssetNode> Route, decimal ProfitRate)> GetAllRoutes(IEnumerable<AssetNode> i_Nodes, string i_StartingCurrency = "USD")
         {
             List<(List<AssetNode> Route, decimal ProfitRate)> result = new List<(List<AssetNode> Route, decimal ProfitRate)>();
             (List<AssetNode> Route, decimal ProfitRate) currentRoute = (null, 1M);
