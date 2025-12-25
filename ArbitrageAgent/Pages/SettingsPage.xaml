@@ -18,7 +18,7 @@
                                         ,Mode=TwoWay}"  Placeholder="Seconds" Keyboard="Numeric"
                                VerticalOptions="Center" MinimumWidthRequest="100">
                                 <Entry.Behaviors>
-                                    <behaviors:PositiveNumberBehavior />
+                                    <behaviors:NaturalNumberBehavior />
                                 </Entry.Behaviors>
                             </Entry>
                         </HorizontalStackLayout>

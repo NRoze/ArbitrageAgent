@@ -36,9 +36,6 @@
                                     <HorizontalStackLayout Spacing="5">
                                         <Label Text="{Binding ., Converter={StaticResource RouteDisplayConverter}}" 
                                                     FontAttributes="Bold" FontSize="14" />
-                                        <!--<Label Text="{Binding ProfitRate, StringFormat='Profit: {0:P3}'}"
-                                               FontSize="12"
-                                               TextColor="Green" />-->
                                     </HorizontalStackLayout>
                             </DataTemplate>
                         </CollectionView.ItemTemplate>
